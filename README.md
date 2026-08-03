@@ -2,6 +2,8 @@
 
 一本面向 Windows 用户的中文 Quarto book，从 Git 环境配置到 GitHub Pages 发布，按步骤组织的个人笔记。
 
+---
+
 ## 章节
 
 | 章节 | 内容 |
@@ -31,5 +33,7 @@ quarto preview
 ## 发布
 
 推送到 `main` 分支后，GitHub Actions 会自动构建并发布到 GitHub Pages。首次使用需在仓库 Settings → Pages 中设置 Source 为 `gh-pages` 分支。
+
+---
 
 推送后先到 **Actions** 页面确认 `publish docs` 构建成功（绿勾），再配置 Pages。
