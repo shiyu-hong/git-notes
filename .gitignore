@@ -1,0 +1,10 @@
+# Quarto 构建缓存与产物
+.quarto/
+docs/
+**/*.quarto_ipynb
+
+# 操作系统与编辑器文件
+.DS_Store
+Thumbs.db
+
+/.quarto/

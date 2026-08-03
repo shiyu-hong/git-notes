@@ -1,0 +1,15 @@
+# Git 笔记 {.unnumbered}
+
+欢迎来到《Git 笔记》。这是一本面向 Windows 用户的中文个人笔记，从安装配置环境开始，到用 GitHub Pages 发布文档为止，覆盖一套完整的 Git + GitHub 工作流。
+
+## 章节 {.unnumbered}
+
+| 章节 | 内容 |
+|------|------|
+| [前言](chapters/preface/index.qmd) | 关于本笔记、前置条件与阅读建议 |
+| [环境配置](chapters/setup/install-windows.qmd) | 安装 Git 并完成初始配置（身份、换行符、SSH） |
+| [日常使用](chapters/daily/commit.qmd) | Git 日常指令：提交、撤销、分支、推送同步 |
+| [平台用法](chapters/platforms/gerrit.qmd) | Gerrit、GitLab 等平台上的 Git 特殊用法 |
+| [Quarto 发布与部署](chapters/quarto-publish/github-pages.qmd) | 用 GitHub Actions 构建并发布 Quarto book 到 GitHub Pages |
+
+> **提示**：本笔记本身就是一个 Quarto book 项目，你可以把它作为练习仓库，跟着「Quarto 发布与部署」一章把它发布到线上。

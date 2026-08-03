@@ -1,0 +1,52 @@
+project:
+  type: book
+  output-dir: docs
+
+lang: zh-CN
+
+book:
+  title: "Git 笔记"
+  subtitle: "从环境配置到 GitHub Pages 发布"
+  language: zh-CN
+  reader-mode: true
+  page-navigation: true
+  bread-crumbs: true
+  navbar:
+    search: true
+    pinned: true
+  search:
+    location: navbar
+  sidebar:
+    search: false
+  chapters:
+    - index.qmd
+    - chapters/preface/index.qmd
+    - part: "环境配置"
+      chapters:
+        - chapters/setup/install-windows.qmd
+        - chapters/setup/common-config.qmd
+    - part: "日常使用"
+      chapters:
+        - chapters/daily/commit.qmd
+        - chapters/daily/undo.qmd
+        - chapters/daily/branch.qmd
+        - chapters/daily/remote.qmd
+    - part: "平台用法"
+      chapters:
+        - chapters/platforms/gerrit.qmd
+        - chapters/platforms/gitlab.qmd
+    - part: "Quarto 发布与部署"
+      chapters:
+        - chapters/quarto-publish/github-pages.qmd
+
+format:
+  html:
+    theme:
+      light: [cosmo, _assets/theme.scss]
+      dark: [darkly, _assets/theme.scss, _assets/theme-dark.scss]
+    syntax-highlighting: github
+    respect-user-color-scheme: true
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    number-sections: true

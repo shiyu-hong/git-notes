@@ -1,0 +1,49 @@
+---
+title: "在 Windows 上安装 Git"
+---
+
+本页介绍 Windows 上 Git 的安装：下载并安装 Git for Windows、设置 PATH 选项、验证安装成功。装好后，继续完成 [Git 初始配置][common-config]。
+
+## 安装 Git for Windows
+
+Git for Windows 是 Windows 上最主流的 Git 发行版，自带 Git Bash 终端。前往 [Git 官网下载页](https://git-scm.com/download/win) 下载安装程序，安装步骤可参考官方 [起步 · 安装 Git](https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git)。
+
+安装时保持默认选项、一路**下一步**即可。安装过程中有两个选项值得留意，下面分别说明。
+
+### 默认编辑器
+
+编写提交信息时，Git 会调用一个文本编辑器，安装向导默认使用 Vim。本笔记以 VS Code 为例——它与 Git 集成良好；你也可以在向导中选用 vim、nano、Notepad++ 等其他编辑器。
+
+安装完成后想换编辑器，用 `git config --global core.editor` 指定完整命令即可。以 VS Code 为例：
+
+```bash
+git config --global core.editor "code --wait"
+```
+
+`code` 是 VS Code 的命令行程序，需在 PATH 中可用（安装 VS Code 时勾选、或在其命令面板执行 **Shell Command: Install 'code' command in PATH**）；`--wait` 让窗口关闭前不退出，Git 会一直等待编辑完成再继续。
+
+### PATH 环境
+
+保持默认的 **Git from the command line and also from 3rd-party software**，安装后即可在 PowerShell、CMD、Git Bash 中直接使用 `git`。
+
+安装完成后**重启终端**，让新的环境变量生效。
+
+## 验证安装
+
+打开终端（PowerShell、CMD 或 Git Bash 均可），输入：
+
+```bash
+git --version
+```
+
+看到类似下面的输出，说明安装成功：
+
+```
+git version 2.47.1.windows.1
+```
+
+如果提示找不到 `git` 命令，多半是当前终端在安装前就已打开，重开一个终端即可。
+
+安装完成并验证通过后，继续 [Git 初始配置][common-config] 一页。
+
+[common-config]: common-config.qmd

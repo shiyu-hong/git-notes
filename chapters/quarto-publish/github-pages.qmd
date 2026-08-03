@@ -1,0 +1,181 @@
+---
+title: "Quarto 发布到 GitHub Pages"
+---
+
+本章把本地写好的 Quarto book 推送到 GitHub，借助 GitHub Actions 自动构建，发布到 GitHub Pages 供在线阅读。全程只使用 GitHub 自带的免费服务，不需要额外服务器。本章只讲 Quarto book 的部署，不涉及其他发布方式。
+
+## 前置条件
+
+开始之前，请确认已经完成：
+
+- 已完成 [环境配置](../setup/common-config.qmd)（身份信息、SSH 密钥已配置到 GitHub）
+- 本地已能构建：在项目根目录执行 `quarto render` 无报错，输出到 `docs/` 目录
+- 一个要发布的内容仓库（本书就是练习对象）
+
+## 原理
+
+GitHub Pages 是 GitHub 提供的静态网页托管服务，可以直接通过 `https://<用户名>.github.io/<仓库名>/` 访问仓库中的静态文件。
+
+Quarto book 构建出的 HTML 是纯静态文件，天然适合托管。发布流程如下：
+
+1. 在本地用 `quarto render` 构建出 `docs/` 目录
+2. 把源码推送到 GitHub 仓库的 `main` 分支
+3. GitHub Actions 检测到推送后自动重新构建，并把产物发布到 `gh-pages` 分支
+4. GitHub Pages 从 `gh-pages` 分支读取文件并对外提供访问
+
+> **提示**：构建在云端自动完成，你只需要把源码推上去，这正是 GitHub Actions 的价值。
+
+下面出现的几个 GitHub Actions 术语，先了解即可：
+
+- **Workflow**：一份自动化流程定义，即 `.github/workflows/` 下的 YAML 文件
+- **Job**：工作流里的一个任务，在独立的运行环境中执行
+- **Step**：任务内的一个步骤，按顺序执行（如「检出代码」「运行构建」）
+- **Action**：一个可复用的步骤实现，用 `uses:` 引用（如 `actions/checkout`）
+- **Runner**：执行任务的虚拟机器，这里用的是 GitHub 免费提供的 `ubuntu-latest`
+
+## 新建 GitHub 仓库
+
+1. 登录 GitHub，点击右上角 **+** → **New repository**
+2. Repository name 填写仓库名（如 `git-notes`）
+3. 选择 **Public**（公开）
+4. 点击 **Create repository**
+
+> **注意**：免费账户的 GitHub Pages 只支持公开仓库，私有仓库无法在线托管，所以这里选择 Public。
+
+## 本地验证构建
+
+推送前先在本地构建一次，确认能正常生成 `docs/`：
+
+```bash
+quarto render
+```
+
+构建成功会输出类似 `Output created: docs\index.html`，并生成 `docs/` 目录。如果这一步就报错，先解决构建问题再继续，不要带着报错推送。
+
+## 本地推送到 GitHub
+
+在本项目根目录初始化仓库并推送：
+
+```bash
+git init
+git add .
+git commit -m "feat: 初始化 Git 笔记 quarto book"
+git branch -M main
+git remote add origin git@github.com:<你的用户名>/<仓库名>.git
+git push -u origin main
+```
+
+> **注意**：这里使用上一章配置好的 SSH 方式。如果使用 HTTPS，把地址换成 `https://github.com/<你的用户名>/<仓库名>.git`。
+
+## 编写发布工作流
+
+在项目根目录创建 `.github/workflows/publish.yml`：
+
+```yaml
+name: publish docs
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: latest
+
+      - name: Render book
+        run: quarto render
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+```
+
+逐行看这个文件做了什么：
+
+- `name: publish docs`：工作流名称，显示在 **Actions** 页面
+- `on: push` `branches: [main]`：触发条件，推送到 `main` 分支时运行
+- `permissions: contents: write`：授予工作流写仓库内容的权限，发布产物需要它
+- `jobs:`：一个工作流可以包含多个任务，这里只有一个
+- `build-and-deploy`：任务名称，可以随意起
+- `runs-on: ubuntu-latest`：运行环境，GitHub 免费提供的 Linux 虚拟机
+- `steps:`：任务内的步骤列表，从上到下依次执行
+- `uses: actions/checkout@v4`：调用 GitHub 官方 action，把仓库源码检出到运行环境
+- `uses: quarto-dev/quarto-actions/setup@v2`：调用 Quarto 官方 action 安装 Quarto
+- `version: latest`：传给该 action 的参数，安装最新版 Quarto
+- `run: quarto render`：执行命令，构建产物输出到 `docs/`
+- `uses: peaceiris/actions-gh-pages@v4`：调用第三方 action，把指定目录发布到 `gh-pages` 分支
+- `publish_dir: ./docs`：指定发布 `docs/` 目录
+- `github_token: ${{ secrets.GITHUB_TOKEN }}`：GitHub 自动生成的临时令牌，授权发布操作
+
+把工作流提交并推送：
+
+```bash
+git add .github/workflows/publish.yml
+git commit -m "ci: 添加 GitHub Pages 发布工作流"
+git push
+```
+
+> **注意**：构建需要下载 Quarto，首次运行可能需要一两分钟，属于正常现象。
+
+## 开启 GitHub Pages
+
+工作流首次发布成功后，还需要让仓库从 `gh-pages` 分支提供页面：
+
+1. 打开仓库的 **Settings** → **Pages**
+2. 在 Source 处选择 **Deploy from a branch**
+3. Branch 选择 `gh-pages`，目录选择 `/ (root)`
+4. 点击 **Save**
+
+设置完成后，页面会显示访问地址：`https://<用户名>.github.io/<仓库名>/`
+
+## 发布后的确认清单
+
+发布完成后，按顺序确认三点：
+
+- **Actions** 页面：名为 `publish docs` 的工作流显示绿色勾，表示构建发布成功
+- **Pages** 设置页：显示 `Your site is live at https://<用户名>.github.io/<仓库名>/`
+- 浏览器打开上面的地址，能看到你的笔记首页
+
+## 后续更新
+
+之后每次推送到 `main` 分支，Actions 都会自动重新构建并更新线上内容：
+
+```bash
+git add .
+git commit -m "docs: 更新某章节"
+git push
+```
+
+## 常见问题排查
+
+- **Actions 页面找不到工作流**：`.github/workflows/publish.yml` 没有提交，或提交后没推送到 `main` 分支。检查文件位置是否正确，再 `git push` 一次。
+- **构建失败（红叉）**：点进失败的 job 查看日志。常见原因是下载 Quarto 超时，在 **Actions** 页面点击 **Re-run all jobs** 重跑即可。
+- **`gh-pages` 分支没生成**：说明构建失败，发布步骤不会执行。先修好构建，再推送一次。
+- **页面打不开 404**：多数是 **Settings** → **Pages** 的 Source 没选 `gh-pages` 分支，或还没点 Save。按上文重新设置。
+- **SSH 认证失败（Permission denied）**：密钥没添加到 GitHub 或代理没启动。回到 [环境配置](../setup/common-config.qmd) 用 `ssh -T git@github.com` 重新验证。
+- **仓库名正好是 `<用户名>.github.io`**：这种仓库比较特殊，GitHub Pages 会直接部署到根域名 `https://<用户名>.github.io/`，访问地址里没有仓库名。一个账号只能有一个这样的仓库。
+
+## 小结
+
+| 步骤 | 操作 |
+|------|------|
+| 建仓库 | GitHub → New repository（选 Public） |
+| 本地构建 | `quarto render` 确认无报错 |
+| 推送源码 | `git init` + `add` + `commit` + `push` |
+| 自动构建 | `.github/workflows/publish.yml` |
+| 开启页面 | Settings → Pages → 选择 `gh-pages` 分支 |
+
+至此，你的 Git 笔记已经可以在线访问了。

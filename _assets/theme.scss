@@ -1,0 +1,144 @@
+/*-- scss:defaults --*/
+
+// 西文字体：Source Sans Pro（quarto.org 同款，Google Fonts；无网时自动回退系统栈）
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap");
+
+// 字体栈：西文主流在前、中文回退在后，按字符自动选字
+$font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+  "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB",
+  "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif !default;
+$font-family-monospace: "JetBrains Mono", "Cascadia Code", "SFMono-Regular",
+  Menlo, Consolas, "Liberation Mono", "PingFang SC", monospace !default;
+
+// 字号与行距：正文 16px（quarto.org 基准），行距 1.7（中文长文）
+$font-size-base: 1rem !default;      // 16px
+$line-height-base: 1.7 !default;
+$headings-font-weight: 600 !default;
+$headings-line-height: 1.3 !default;
+
+// 标题：GitHub markdown 比例，中文阅读更舒适
+$h1-font-size: 2rem !default;        // 32px
+$h2-font-size: 1.5rem !default;      // 24px
+$h3-font-size: 1.25rem !default;     // 20px
+$h4-font-size: 1.1rem !default;
+
+// 白天配色（quarto.org token；黑夜由 theme-dark.scss 覆盖）
+$body-bg: #ffffff !default;
+$body-color: #343a40 !default;
+$link-color: #39729E !default;
+$link-hover-color: #2d5b7e !default;
+$border-color: #dee2e6 !default;
+$text-muted: #6a737b !default;
+
+// 顶栏（quarto.org）
+$navbar-bg: #f8f9fa !default;
+$navbar-fg: #545555 !default;
+$navbar-hl: #2c5c7b !default;
+
+// 右侧目录（quarto.org）
+$toc-color: #39729E !default;
+$toc-active-border: #39729E !default;
+$toc-inactive-border: #e9ecef !default;
+
+/*-- scss:rules --*/
+
+// 首页：book.title 生成的 title-block 与 `# 书名 {.unnumbered}` 标题重复，隐藏前者
+#quarto-document-content > header.quarto-title-block:has(+ section.level1) {
+  display: none;
+}
+
+// 中文段落两端对齐，避免中英混排右侧参差
+p { text-align: justify; text-justify: inter-ideograph; }
+
+// 引用块、列表项、表格短文本保持左对齐
+blockquote p, li, td, th { text-align: start; }
+
+// 标题、代码块回退左对齐
+h1, h2, h3, h4, h5 { text-align: left; }
+pre, code, kbd, samp { text-align: left; }
+
+// 长英文单词 / URL 自动换行，不撑破布局
+p, li, td, th { overflow-wrap: break-word; word-break: break-word; }
+a { overflow-wrap: anywhere; }
+
+// 正文抗锯齿，Windows 中文渲染更细腻
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+// 标题锚点跳转不被吸顶顶栏遮挡
+h1, h2, h3, h4, h5 { scroll-margin-top: 5rem; }
+
+// 标题间距
+h2 { margin-top: 2rem; margin-bottom: .9rem; }
+h3 { margin-top: 1.6rem; }
+
+// 链接：下划线（quarto.org 风格）
+#quarto-document-content a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+#quarto-document-content a:hover { color: #2d5b7e; }
+
+// 内联代码（GitHub 风格：浅底、保持正文色）
+:not(pre) > code {
+  background-color: rgba(175, 184, 193, .2);
+  color: inherit;
+  border-radius: 4px;
+  padding: .15em .3em;
+  font-size: .875em;
+}
+
+// 代码块（GitHub 风格：#f6f8fa 底 + 圆角 + 发丝边框）
+div.sourceCode,
+pre:not(.sourceCode) {
+  background-color: #f6f8fa;
+  border: 1px solid rgba(127, 127, 127, .15);
+  border-radius: 6px;
+  line-height: 1.6;
+  margin: 1.1rem 0;
+}
+div.sourceCode { padding: .75rem 1rem; }
+div.sourceCode > pre {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+pre:not(.sourceCode) {
+  padding: .75rem 1rem;
+  color: #343a40;
+}
+pre code { background: transparent; padding: 0; }
+
+// 顶栏发丝边框（quarto.org 同款）
+#quarto-header { border-bottom: 1px solid #dee2e6; }
+
+// 品牌标题字号与字重（左对齐由 Quarto 内置规则保证）
+.navbar .navbar-brand { font-size: 1.1rem; font-weight: 650; }
+
+// 侧边栏：未激活灰字、hover 变蓝、激活只变色（参考 quarto.org）
+.sidebar-item-text.sidebar-link:not(.text-start) {
+  color: #595959;
+  font-size: .95rem;
+  line-height: 1.5;
+  padding: .35rem .5rem;
+  border-radius: 4px;
+}
+.sidebar-item-text.sidebar-link:not(.text-start):hover { color: #2e5c80; }
+.sidebar-item-text.sidebar-link.active { color: #39729E; }
+.sidebar-item-section > .sidebar-item-container > .sidebar-item-text {
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .75;
+}
+
+// 细节
+::selection { background-color: rgba(57, 114, 158, .18); }
+hr { opacity: .25; }
+kbd { border-radius: 4px; font-size: .85em; padding: .1em .35em; }
+.footnotes { font-size: .9em; }
+
+// 列表：贴合阅读习惯的缩进
+ul, ol { padding-left: 1.5rem; }
+ul ul, ol ul, ul ol, ol ol { padding-left: 1.25rem; }

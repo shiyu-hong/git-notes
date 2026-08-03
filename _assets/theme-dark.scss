@@ -1,0 +1,45 @@
+/*-- scss:defaults --*/
+
+// 黑夜配色（quarto.org darkly 基底的精确 token，plain 覆盖白天值）
+$body-bg: #151515;
+$body-color: #f8f8f8;
+$link-color: #75A8D9;
+$link-hover-color: #5e86ae;
+$border-color: rgba(36, 36, 38, .5);
+$text-muted: rgb(159, 166, 172);
+
+$navbar-bg: #202022;
+$navbar-fg: #aaaabb;
+$navbar-hl: #80aedc;
+
+$toc-color: #75A8D9;
+$toc-active-border: #75A8D9;
+$toc-inactive-border: rgba(36, 36, 38, .5);
+
+/*-- scss:rules --*/
+
+body.quarto-dark {
+  // 内联代码（GitHub 深色）
+  :not(pre) > code { background-color: rgba(110, 118, 129, .4); }
+
+  // 代码块（GitHub 深色 #0d1117）
+  div.sourceCode,
+  pre:not(.sourceCode) {
+    background-color: #0d1117;
+    border-color: rgba(255, 255, 255, .1);
+  }
+  pre:not(.sourceCode) { color: #c9d1d9; }
+
+  // 顶栏发丝边框
+  #quarto-header { border-bottom-color: #3b3f47; }
+
+  // 链接 hover
+  #quarto-document-content a:hover { color: #5e86ae; }
+
+  // 侧边栏
+  .sidebar-item-text.sidebar-link:not(.text-start) { color: #a1a1a1; }
+  .sidebar-item-text.sidebar-link:not(.text-start):hover { color: #75a8d9; }
+  .sidebar-item-text.sidebar-link.active { color: #75A8D9; }
+
+  ::selection { background-color: rgba(117, 168, 217, .25); }
+}
