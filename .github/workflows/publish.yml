@@ -1,28 +1,29 @@
+# 工作流名称，显示在 Actions 页面
 name: publish docs
 
 on:
   push:
-    branches: [main]
+    branches: [main]      # 触发条件：推送到 main 分支时运行
 
 permissions:
-  contents: write
+  contents: write         # 授予工作流写仓库内容的权限，发布产物需要
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout    # 检出仓库源码
         uses: actions/checkout@v4
 
-      - name: Setup Quarto
+      - name: Setup Quarto   # 安装 Quarto（version 用 release 取最新稳定版）
         uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: release
 
-      - name: Render book
+      - name: Render book    # 执行构建，产物输出到 docs/
         run: quarto render
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages   # 把 docs/ 发布到 gh-pages 分支
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
