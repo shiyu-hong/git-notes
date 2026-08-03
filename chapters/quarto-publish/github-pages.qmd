@@ -38,9 +38,19 @@ Quarto book 构建出的 HTML 是纯静态文件，天然适合托管。发布�
 1. 登录 GitHub，点击右上角 **+** → **New repository**
 2. Repository name 填写仓库名（如 `git-notes`）
 3. 选择 **Public**（公开）
-4. 点击 **Create repository**
+4. **不要**勾选 Add a README file、Add .gitignore、Choose a license，保持空仓库
+5. 点击 **Create repository**
 
 > **注意**：免费账户的 GitHub Pages 只支持公开仓库，私有仓库无法在线托管，所以这里选择 Public。
+
+> **注意**：创建仓库时如果勾选了 README 或 license 等选项，GitHub 会先生成一个 initial commit，本地仓库与远端各有一套互不相关的历史，首次 `git push` 会被拒绝（报 `fetch first`）。解法是拉取远端历史再合并：
+>
+> ```bash
+> git pull origin main --allow-unrelated-histories
+> git push
+> ```
+>
+> 合并后仓库里会多出 GitHub 生成的 README 或 LICENSE 文件，属正常现象。
 
 ## 本地验证构建
 
@@ -91,7 +101,7 @@ jobs:
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: latest
+          version: release
 
       - name: Render book
         run: quarto render
@@ -114,7 +124,7 @@ jobs:
 - `steps:`：任务内的步骤列表，从上到下依次执行
 - `uses: actions/checkout@v4`：调用 GitHub 官方 action，把仓库源码检出到运行环境
 - `uses: quarto-dev/quarto-actions/setup@v2`：调用 Quarto 官方 action 安装 Quarto
-- `version: latest`：传给该 action 的参数，安装最新版 Quarto
+- `version: release`：传给该 action 的参数，安装最新稳定版 Quarto。合法值还有 `pre-release`（最新开发版）或具体版本号（如 `1.5.57`）；`latest` **不是**合法值
 - `run: quarto render`：执行命令，构建产物输出到 `docs/`
 - `uses: peaceiris/actions-gh-pages@v4`：调用第三方 action，把指定目录发布到 `gh-pages` 分支
 - `publish_dir: ./docs`：指定发布 `docs/` 目录
@@ -161,9 +171,12 @@ git push
 
 ## 常见问题排查
 
+推送后若 `gh-pages` 分支没有生成，先打开仓库的 **Actions** 页面：找到最近一次 `publish docs` 运行记录，如果显示红叉就点进去，看哪个步骤标红，展开日志查看具体报错，再对照下面排查。
+
+- **Setup Quarto 步骤失败（exit code 8）**：多半是工作流里写了 `version: latest`。`latest` 不是 `quarto-dev/quarto-actions/setup` 的合法值，action 会去下载 `vlatest` 的安装包导致 404。把它改成 `version: release`，重新提交推送。
 - **Actions 页面找不到工作流**：`.github/workflows/publish.yml` 没有提交，或提交后没推送到 `main` 分支。检查文件位置是否正确，再 `git push` 一次。
 - **构建失败（红叉）**：点进失败的 job 查看日志。常见原因是下载 Quarto 超时，在 **Actions** 页面点击 **Re-run all jobs** 重跑即可。
-- **`gh-pages` 分支没生成**：说明构建失败，发布步骤不会执行。先修好构建，再推送一次。
+- **`gh-pages` 分支没生成**：说明工作流失败，发布步骤不会执行。先修好失败步骤，再推送一次；工作流成功（绿勾）后分支才会出现。
 - **页面打不开 404**：多数是 **Settings** → **Pages** 的 Source 没选 `gh-pages` 分支，或还没点 Save。按上文重新设置。
 - **SSH 认证失败（Permission denied）**：密钥没添加到 GitHub 或代理没启动。回到 [环境配置](../setup/common-config.qmd) 用 `ssh -T git@github.com` 重新验证。
 - **仓库名正好是 `<用户名>.github.io`**：这种仓库比较特殊，GitHub Pages 会直接部署到根域名 `https://<用户名>.github.io/`，访问地址里没有仓库名。一个账号只能有一个这样的仓库。
