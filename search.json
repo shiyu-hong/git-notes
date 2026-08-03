@@ -1,0 +1,359 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Git 笔记",
+    "section": "",
+    "text": "Git 笔记\n欢迎来到《Git 笔记》。这是一本面向 Windows 用户的中文个人笔记，从安装配置环境开始，到用 GitHub Pages 发布文档为止，覆盖一套完整的 Git + GitHub 工作流。",
+    "crumbs": [
+      "Git 笔记"
+    ]
+  },
+  {
+    "objectID": "index.html#章节",
+    "href": "index.html#章节",
+    "title": "Git 笔记",
+    "section": "章节",
+    "text": "章节\n\n\n\n章节\n内容\n\n\n\n\n前言\n关于本笔记、前置条件与阅读建议\n\n\n环境配置\n安装 Git 并完成初始配置（身份、换行符、SSH）\n\n\n日常使用\nGit 日常指令：提交、撤销、分支、推送同步\n\n\n平台用法\nGerrit、GitLab 等平台上的 Git 特殊用法\n\n\nQuarto 发布与部署\n用 GitHub Actions 构建并发布 Quarto book 到 GitHub Pages\n\n\n\n\n提示：本笔记本身就是一个 Quarto book 项目，你可以把它作为练习仓库，跟着「Quarto 发布与部署」一章把它发布到线上。",
+    "crumbs": [
+      "Git 笔记"
+    ]
+  },
+  {
+    "objectID": "chapters/preface/index.html",
+    "href": "chapters/preface/index.html",
+    "title": "前言",
+    "section": "",
+    "text": "前置条件\n本笔记步骤化、可操作：每个命令都会说明作用、常用参数与典型场景，并给出完整可复制的命令序列。\n开始之前，请准备：",
+    "crumbs": [
+      "前言"
+    ]
+  },
+  {
+    "objectID": "chapters/preface/index.html#前置条件",
+    "href": "chapters/preface/index.html#前置条件",
+    "title": "前言",
+    "section": "",
+    "text": "一台可以联网的 Windows 电脑\n一个 GitHub 账号\n一个代码编辑器（推荐 VS Code）",
+    "crumbs": [
+      "前言"
+    ]
+  },
+  {
+    "objectID": "chapters/preface/index.html#如何阅读",
+    "href": "chapters/preface/index.html#如何阅读",
+    "title": "前言",
+    "section": "如何阅读",
+    "text": "如何阅读\n\n如果你是第一次使用 Git，建议从「环境配置」一章开始，一步一步跟着做。\n如果环境已经配好，可以直接跳到「Quarto 发布与部署」章节。\n每章的示例都尽量独立，可以按需查阅。",
+    "crumbs": [
+      "前言"
+    ]
+  },
+  {
+    "objectID": "chapters/preface/index.html#命令环境以-bash-为准",
+    "href": "chapters/preface/index.html#命令环境以-bash-为准",
+    "title": "前言",
+    "section": "命令环境：以 Bash 为准",
+    "text": "命令环境：以 Bash 为准\n本笔记的命令示例默认以 Bash 环境为准。Bash 是随 Git for Windows 自带的终端环境（Git Bash），模拟了 Unix 风格的命令（ls、pwd、grep 等），让你在 Windows 上也能沿用 Linux/macOS 一致的操作习惯。\n用起来很简单：安装完 Git for Windows 后，打开 Git Bash，把笔记中的命令直接复制进去执行即可。\nWindows 上常用的终端有两类：\n\nGit Bash：模拟 Unix 环境，命令行为与本笔记示例最接近，推荐初学者使用。\nPowerShell：Windows 原生终端，git 命令同样可用，但路径、环境变量等语法与 Bash 略有差异，个别示例需稍作调整。\n\n因此，笔记中的命令默认按 Git Bash 演示。",
+    "crumbs": [
+      "前言"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/install-windows.html",
+    "href": "chapters/setup/install-windows.html",
+    "title": "1  在 Windows 上安装 Git",
+    "section": "",
+    "text": "1.1 安装 Git for Windows\n本页介绍 Windows 上 Git 的安装：下载并安装 Git for Windows、设置 PATH 选项、验证安装成功。装好后，继续完成 Git 初始配置。\nGit for Windows 是 Windows 上最主流的 Git 发行版，自带 Git Bash 终端。前往 Git 官网下载页 下载安装程序，安装步骤可参考官方 起步 · 安装 Git。\n安装时保持默认选项、一路下一步即可。安装过程中有两个选项值得留意，下面分别说明。",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>在 Windows 上安装 Git</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/install-windows.html#安装-git-for-windows",
+    "href": "chapters/setup/install-windows.html#安装-git-for-windows",
+    "title": "1  在 Windows 上安装 Git",
+    "section": "",
+    "text": "1.1.1 默认编辑器\n编写提交信息时，Git 会调用一个文本编辑器，安装向导默认使用 Vim。本笔记以 VS Code 为例——它与 Git 集成良好；你也可以在向导中选用 vim、nano、Notepad++ 等其他编辑器。\n安装完成后想换编辑器，用 git config --global core.editor 指定完整命令即可。以 VS Code 为例：\ngit config --global core.editor \"code --wait\"\ncode 是 VS Code 的命令行程序，需在 PATH 中可用（安装 VS Code 时勾选、或在其命令面板执行 Shell Command: Install ‘code’ command in PATH）；--wait 让窗口关闭前不退出，Git 会一直等待编辑完成再继续。\n\n\n1.1.2 PATH 环境\n保持默认的 Git from the command line and also from 3rd-party software，安装后即可在 PowerShell、CMD、Git Bash 中直接使用 git。\n安装完成后重启终端，让新的环境变量生效。",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>在 Windows 上安装 Git</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/install-windows.html#验证安装",
+    "href": "chapters/setup/install-windows.html#验证安装",
+    "title": "1  在 Windows 上安装 Git",
+    "section": "1.2 验证安装",
+    "text": "1.2 验证安装\n打开终端（PowerShell、CMD 或 Git Bash 均可），输入：\ngit --version\n看到类似下面的输出，说明安装成功：\ngit version 2.47.1.windows.1\n如果提示找不到 git 命令，多半是当前终端在安装前就已打开，重开一个终端即可。\n安装完成并验证通过后，继续 Git 初始配置 一页。",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>在 Windows 上安装 Git</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/common-config.html",
+    "href": "chapters/setup/common-config.html",
+    "title": "2  Git 初始配置",
+    "section": "",
+    "text": "2.1 设置身份信息\n本页介绍安装 Git 后要完成的初始配置：设置身份信息、处理换行符、接入 VS Code，并配置 SSH 连接 GitHub。这些步骤与操作系统无关，装完 Git 后都要做一遍。\n安装后第一件事是设置你的身份信息。Git 用它标注每一次提交，全局配置一次即可：\n查看当前配置：\n配置保存在用户主目录的 .gitconfig 文件中，也可以直接编辑：",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Git 初始配置</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/common-config.html#设置身份信息",
+    "href": "chapters/setup/common-config.html#设置身份信息",
+    "title": "2  Git 初始配置",
+    "section": "",
+    "text": "git config --global user.name \"你的名字\"\ngit config --global user.email \"you@example.com\"\n\n注意：邮箱建议与 GitHub 账号邮箱一致，这样提交记录能正确关联到你的 GitHub 主页。\n\n\ngit config --global --list\n\ngit config --global --edit",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Git 初始配置</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/common-config.html#处理换行符core.autocrlf",
+    "href": "chapters/setup/common-config.html#处理换行符core.autocrlf",
+    "title": "2  Git 初始配置",
+    "section": "2.2 处理换行符：core.autocrlf",
+    "text": "2.2 处理换行符：core.autocrlf\nWindows 使用 CRLF 作为行结束符，Linux/macOS 使用 LF。跨平台协作时，换行符差异会让 diff 出现大量无意义改动。建议启用 Git 的自动转换：\ngit config --global core.autocrlf true\n效果是：检出代码时转换为 CRLF（Windows 友好），提交时转换为 LF（仓库内统一）。仓库里永远只存 LF，不同系统各取所需。\n\n注意：仓库内统一使用 LF 是开源项目的通行做法。不要在仓库里存储依赖 CRLF、只有 Windows 能正常处理的文件格式，否则每次提交都可能出现整行改动。",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Git 初始配置</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/common-config.html#vs-code-集成",
+    "href": "chapters/setup/common-config.html#vs-code-集成",
+    "title": "2  Git 初始配置",
+    "section": "2.3 VS Code 集成",
+    "text": "2.3 VS Code 集成\nVS Code 内置了 Git 支持，左侧源代码管理面板可以查看改动、暂存、提交、推送，配合集成终端使用效率很高。\n\n打开源代码管理面板：Ctrl+Shift+G\n打开集成终端运行 git 命令：Ctrl+`（反引号键）\n\n\n提示：VS Code 官方 Git 文档",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Git 初始配置</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/common-config.html#生成-ssh-密钥并配置到-github",
+    "href": "chapters/setup/common-config.html#生成-ssh-密钥并配置到-github",
+    "title": "2  Git 初始配置",
+    "section": "2.4 生成 SSH 密钥并配置到 GitHub",
+    "text": "2.4 生成 SSH 密钥并配置到 GitHub\nSSH 协议让你免去每次输入用户名密码，是连接 GitHub 的推荐方式。以下命令在 Git Bash 中执行。\n\n2.4.1 生成密钥\nssh-keygen -t ed25519 -C \"you@example.com\"\n一路回车使用默认路径（~/.ssh/id_ed25519），也可以为密钥设置口令（passphrase）。\n\n注意：-C 是注释，建议填你的邮箱，方便识别密钥归属。老系统若不支持 ed25519，可用 ssh-keygen -t rsa -b 4096。\n\n\n\n2.4.2 启动 SSH 代理并添加密钥\n以下命令在 Git Bash 中执行。只有给私钥设置了口令才需要这一步，没设口令可以直接跳过。\neval \"$(ssh-agent -s)\"  # 启动 ssh-agent，并让当前终端连上它\nssh-add ~/.ssh/id_ed25519  # 把私钥解锁并加载到代理内存（有口令则输入一次）\n\n\n2.4.3 查看公钥并复制\ncat ~/.ssh/id_ed25519.pub\n把输出的内容完整复制（以 ssh-ed25519 开头）。\n\n\n2.4.4 添加到 GitHub\n\n登录 GitHub，打开 SSH keys 设置页\n点击 New SSH key\nTitle 随意填写（如 Windows），Key 粘贴刚才复制的公钥\n点击 Add SSH key\n\n\n\n2.4.5 验证连接\nssh -T git@github.com\n首次连接会提示确认指纹，输入 yes。看到下面的输出即表示成功：\nHi &lt;你的用户名&gt;! You've successfully authenticated, but GitHub does not provide shell access.",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Git 初始配置</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/setup/common-config.html#小结",
+    "href": "chapters/setup/common-config.html#小结",
+    "title": "2  Git 初始配置",
+    "section": "2.5 小结",
+    "text": "2.5 小结\n到这里，环境配置完成：\n\n\n\n项目\n命令/文件\n\n\n\n\nGit 安装\n官方安装包，git --version 验证\n\n\n身份信息\ngit config --global user.name / user.email\n\n\n换行符\ngit config --global core.autocrlf true\n\n\n编辑器\nVS Code 源代码管理面板\n\n\nSSH 连接\n~/.ssh/id_ed25519，已添加到 GitHub\n\n\n\n\n下一步：把这份笔记发布到 GitHub Pages，见 Quarto 发布与部署 一章。",
+    "crumbs": [
+      "环境配置",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Git 初始配置</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/daily/commit.html",
+    "href": "chapters/daily/commit.html",
+    "title": "3  暂存与提交",
+    "section": "",
+    "text": "本章待补充。",
+    "crumbs": [
+      "日常使用",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>暂存与提交</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/daily/undo.html",
+    "href": "chapters/daily/undo.html",
+    "title": "4  撤销与修正",
+    "section": "",
+    "text": "本章待补充。",
+    "crumbs": [
+      "日常使用",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>撤销与修正</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/daily/branch.html",
+    "href": "chapters/daily/branch.html",
+    "title": "5  分支与合并",
+    "section": "",
+    "text": "本章待补充。",
+    "crumbs": [
+      "日常使用",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>分支与合并</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/daily/remote.html",
+    "href": "chapters/daily/remote.html",
+    "title": "6  推送与同步",
+    "section": "",
+    "text": "本章待补充。",
+    "crumbs": [
+      "日常使用",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>推送与同步</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/platforms/gerrit.html",
+    "href": "chapters/platforms/gerrit.html",
+    "title": "7  Gerrit 特殊用法",
+    "section": "",
+    "text": "本章待补充。",
+    "crumbs": [
+      "平台用法",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Gerrit 特殊用法</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/platforms/gitlab.html",
+    "href": "chapters/platforms/gitlab.html",
+    "title": "8  GitLab 特殊用法",
+    "section": "",
+    "text": "本章待补充。",
+    "crumbs": [
+      "平台用法",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>GitLab 特殊用法</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html",
+    "href": "chapters/quarto-publish/github-pages.html",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "",
+    "text": "9.1 前置条件\n本章把本地写好的 Quarto book 推送到 GitHub，借助 GitHub Actions 自动构建，发布到 GitHub Pages 供在线阅读。全程只使用 GitHub 自带的免费服务，不需要额外服务器。本章只讲 Quarto book 的部署，不涉及其他发布方式。\n开始之前，请确认已经完成：",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#前置条件",
+    "href": "chapters/quarto-publish/github-pages.html#前置条件",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "",
+    "text": "已完成 环境配置（身份信息、SSH 密钥已配置到 GitHub）\n本地已能构建：在项目根目录执行 quarto render 无报错，输出到 docs/ 目录\n一个要发布的内容仓库（本书就是练习对象）",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#原理",
+    "href": "chapters/quarto-publish/github-pages.html#原理",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.2 原理",
+    "text": "9.2 原理\nGitHub Pages 是 GitHub 提供的静态网页托管服务，可以直接通过 https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/ 访问仓库中的静态文件。\nQuarto book 构建出的 HTML 是纯静态文件，天然适合托管。发布流程如下：\n\n在本地用 quarto render 构建出 docs/ 目录\n把源码推送到 GitHub 仓库的 main 分支\nGitHub Actions 检测到推送后自动重新构建，并把产物发布到 gh-pages 分支\nGitHub Pages 从 gh-pages 分支读取文件并对外提供访问\n\n\n提示：构建在云端自动完成，你只需要把源码推上去，这正是 GitHub Actions 的价值。\n\n下面出现的几个 GitHub Actions 术语，先了解即可：\n\nWorkflow：一份自动化流程定义，即 .github/workflows/ 下的 YAML 文件\nJob：工作流里的一个任务，在独立的运行环境中执行\nStep：任务内的一个步骤，按顺序执行（如「检出代码」「运行构建」）\nAction：一个可复用的步骤实现，用 uses: 引用（如 actions/checkout）\nRunner：执行任务的虚拟机器，这里用的是 GitHub 免费提供的 ubuntu-latest",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#新建-github-仓库",
+    "href": "chapters/quarto-publish/github-pages.html#新建-github-仓库",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.3 新建 GitHub 仓库",
+    "text": "9.3 新建 GitHub 仓库\n\n登录 GitHub，点击右上角 + → New repository\nRepository name 填写仓库名（如 git-notes）\n选择 Public（公开）\n不要勾选 Add a README file、Add .gitignore、Choose a license，保持空仓库\n点击 Create repository\n\n\n注意：免费账户的 GitHub Pages 只支持公开仓库，私有仓库无法在线托管，所以这里选择 Public。\n\n\n注意：创建仓库时如果勾选了 README 或 license 等选项，GitHub 会先生成一个 initial commit，本地仓库与远端各有一套互不相关的历史，首次 git push 会被拒绝（报 fetch first）。解法是拉取远端历史再合并：\ngit pull origin main --allow-unrelated-histories\ngit push\n合并后仓库里会多出 GitHub 生成的 README 或 LICENSE 文件，属正常现象。",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#本地验证构建",
+    "href": "chapters/quarto-publish/github-pages.html#本地验证构建",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.4 本地验证构建",
+    "text": "9.4 本地验证构建\n推送前先在本地构建一次，确认能正常生成 docs/：\nquarto render\n构建成功会输出类似 Output created: docs\\index.html，并生成 docs/ 目录。如果这一步就报错，先解决构建问题再继续，不要带着报错推送。",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#本地推送到-github",
+    "href": "chapters/quarto-publish/github-pages.html#本地推送到-github",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.5 本地推送到 GitHub",
+    "text": "9.5 本地推送到 GitHub\n在本项目根目录初始化仓库并推送：\ngit init\ngit add .\ngit commit -m \"feat: 初始化 Git 笔记 quarto book\"\ngit branch -M main\ngit remote add origin git@github.com:&lt;你的用户名&gt;/&lt;仓库名&gt;.git\ngit push -u origin main\n\n注意：这里使用上一章配置好的 SSH 方式。如果使用 HTTPS，把地址换成 https://github.com/&lt;你的用户名&gt;/&lt;仓库名&gt;.git。",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#编写发布工作流",
+    "href": "chapters/quarto-publish/github-pages.html#编写发布工作流",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.6 编写发布工作流",
+    "text": "9.6 编写发布工作流\n在项目根目录创建 .github/workflows/publish.yml：\nname: publish docs\n\non:\n  push:\n    branches: [main]\n\npermissions:\n  contents: write\n\njobs:\n  build-and-deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout\n        uses: actions/checkout@v4\n\n      - name: Setup Quarto\n        uses: quarto-dev/quarto-actions/setup@v2\n        with:\n          version: release\n\n      - name: Render book\n        run: quarto render\n\n      - name: Deploy to GitHub Pages\n        uses: peaceiris/actions-gh-pages@v4\n        with:\n          github_token: ${{ secrets.GITHUB_TOKEN }}\n          publish_dir: ./docs\n逐行看这个文件做了什么：\n\nname: publish docs：工作流名称，显示在 Actions 页面\non: push branches: [main]：触发条件，推送到 main 分支时运行\npermissions: contents: write：授予工作流写仓库内容的权限，发布产物需要它\njobs:：一个工作流可以包含多个任务，这里只有一个\nbuild-and-deploy：任务名称，可以随意起\nruns-on: ubuntu-latest：运行环境，GitHub 免费提供的 Linux 虚拟机\nsteps:：任务内的步骤列表，从上到下依次执行\nuses: actions/checkout@v4：调用 GitHub 官方 action，把仓库源码检出到运行环境\nuses: quarto-dev/quarto-actions/setup@v2：调用 Quarto 官方 action 安装 Quarto\nversion: release：传给该 action 的参数，安装最新稳定版 Quarto。合法值还有 pre-release（最新开发版）或具体版本号（如 1.5.57）；latest 不是合法值\nrun: quarto render：执行命令，构建产物输出到 docs/\nuses: peaceiris/actions-gh-pages@v4：调用第三方 action，把指定目录发布到 gh-pages 分支\npublish_dir: ./docs：指定发布 docs/ 目录\ngithub_token: ${{ secrets.GITHUB_TOKEN }}：GitHub 自动生成的临时令牌，授权发布操作\n\n把工作流提交并推送：\ngit add .github/workflows/publish.yml\ngit commit -m \"ci: 添加 GitHub Pages 发布工作流\"\ngit push\n\n注意：构建需要下载 Quarto，首次运行可能需要一两分钟，属于正常现象。",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#开启-github-pages",
+    "href": "chapters/quarto-publish/github-pages.html#开启-github-pages",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.7 开启 GitHub Pages",
+    "text": "9.7 开启 GitHub Pages\n工作流首次发布成功后，还需要让仓库从 gh-pages 分支提供页面：\n\n打开仓库的 Settings → Pages\n在 Source 处选择 Deploy from a branch\nBranch 选择 gh-pages，目录选择 / (root)\n点击 Save\n\n设置完成后，页面会显示访问地址：https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#发布后的确认清单",
+    "href": "chapters/quarto-publish/github-pages.html#发布后的确认清单",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.8 发布后的确认清单",
+    "text": "9.8 发布后的确认清单\n发布完成后，按顺序确认三点：\n\nActions 页面：名为 publish docs 的工作流显示绿色勾，表示构建发布成功\nPages 设置页：显示 Your site is live at https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/\n浏览器打开上面的地址，能看到你的笔记首页",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#后续更新",
+    "href": "chapters/quarto-publish/github-pages.html#后续更新",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.9 后续更新",
+    "text": "9.9 后续更新\n之后每次推送到 main 分支，Actions 都会自动重新构建并更新线上内容：\ngit add .\ngit commit -m \"docs: 更新某章节\"\ngit push",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#常见问题排查",
+    "href": "chapters/quarto-publish/github-pages.html#常见问题排查",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.10 常见问题排查",
+    "text": "9.10 常见问题排查\n推送后若 gh-pages 分支没有生成，先打开仓库的 Actions 页面：找到最近一次 publish docs 运行记录，如果显示红叉就点进去，看哪个步骤标红，展开日志查看具体报错，再对照下面排查。\n\nSetup Quarto 步骤失败（exit code 8）：多半是工作流里写了 version: latest。latest 不是 quarto-dev/quarto-actions/setup 的合法值，action 会去下载 vlatest 的安装包导致 404。把它改成 version: release，重新提交推送。\nActions 页面找不到工作流：.github/workflows/publish.yml 没有提交，或提交后没推送到 main 分支。检查文件位置是否正确，再 git push 一次。\n构建失败（红叉）：点进失败的 job 查看日志。常见原因是下载 Quarto 超时，在 Actions 页面点击 Re-run all jobs 重跑即可。\ngh-pages 分支没生成：说明工作流失败，发布步骤不会执行。先修好失败步骤，再推送一次；工作流成功（绿勾）后分支才会出现。\n页面打不开 404：多数是 Settings → Pages 的 Source 没选 gh-pages 分支，或还没点 Save。按上文重新设置。\nSSH 认证失败（Permission denied）：密钥没添加到 GitHub 或代理没启动。回到 环境配置 用 ssh -T git@github.com 重新验证。\n仓库名正好是 &lt;用户名&gt;.github.io：这种仓库比较特殊，GitHub Pages 会直接部署到根域名 https://&lt;用户名&gt;.github.io/，访问地址里没有仓库名。一个账号只能有一个这样的仓库。",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/quarto-publish/github-pages.html#小结",
+    "href": "chapters/quarto-publish/github-pages.html#小结",
+    "title": "9  Quarto 发布到 GitHub Pages",
+    "section": "9.11 小结",
+    "text": "9.11 小结\n\n\n\n步骤\n操作\n\n\n\n\n建仓库\nGitHub → New repository（选 Public）\n\n\n本地构建\nquarto render 确认无报错\n\n\n推送源码\ngit init + add + commit + push\n\n\n自动构建\n.github/workflows/publish.yml\n\n\n开启页面\nSettings → Pages → 选择 gh-pages 分支\n\n\n\n至此，你的 Git 笔记已经可以在线访问了。",
+    "crumbs": [
+      "Quarto 发布与部署",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
+    ]
+  }
+]
