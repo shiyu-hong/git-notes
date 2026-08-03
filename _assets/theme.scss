@@ -10,7 +10,7 @@ $font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont,
 $font-family-monospace: "JetBrains Mono", "Cascadia Code", "SFMono-Regular",
   Menlo, Consolas, "Liberation Mono", "PingFang SC", monospace !default;
 
-// 字号与行距：正文 16px（quarto.org 基准），行距 1.7（中文长文）
+// 字号与行距：正文 16px（中文正文基准），行距 1.7
 $font-size-base: 1rem !default;      // 16px
 $line-height-base: 1.7 !default;
 $headings-font-weight: 600 !default;
@@ -50,6 +50,16 @@ $toc-inactive-border: #e9ecef !default;
 // 中文段落两端对齐，避免中英混排右侧参差
 p { text-align: justify; text-justify: inter-ideograph; }
 
+// 中文微扩字距，改善方块字与标点黏连（CSS 无法只作用于 CJK，整体微调）
+p, li { letter-spacing: .02em; }
+h1, h2, h3, h4, h5 { letter-spacing: .03em; }
+
+// 中文段落间距（略紧于 Bootstrap 默认 1rem）
+p { margin-top: 0; margin-bottom: .9em; }
+
+// 引用/提示块留白统一
+blockquote { margin-top: 1rem; margin-bottom: 1.2rem; }
+
 // 引用块、列表项、表格短文本保持左对齐
 blockquote p, li, td, th { text-align: start; }
 
@@ -67,9 +77,10 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
 // 标题锚点跳转不被吸顶顶栏遮挡
 h1, h2, h3, h4, h5 { scroll-margin-top: 5rem; }
 
-// 标题间距
-h2 { margin-top: 2rem; margin-bottom: .9rem; }
-h3 { margin-top: 1.6rem; }
+// 标题间距（中文节奏，参考 quarto.org）
+h2 { margin-top: 2.5rem; margin-bottom: .7rem; }
+h3 { margin-top: 1.8rem; margin-bottom: .45rem; }
+h4 { margin-top: 1.5rem; margin-bottom: .35rem; }
 
 // 链接：下划线（quarto.org 风格）
 #quarto-document-content a {
@@ -135,10 +146,28 @@ pre code { background: transparent; padding: 0; }
 
 // 细节
 ::selection { background-color: rgba(57, 114, 158, .18); }
-hr { opacity: .25; }
+hr { margin: 2rem 0; opacity: .25; }
 kbd { border-radius: 4px; font-size: .85em; padding: .1em .35em; }
 .footnotes { font-size: .9em; }
 
-// 列表：贴合阅读习惯的缩进
-ul, ol { padding-left: 1.5rem; }
+// 列表：贴合阅读习惯的缩进与项间距
+ul, ol { padding-left: 1.6rem; margin-top: .25em; margin-bottom: 1.1em; }
 ul ul, ol ul, ul ol, ol ol { padding-left: 1.25rem; }
+li { margin-bottom: .2em; }
+li:last-child { margin-bottom: 0; }
+
+// 表格默认样式（Bootstrap 文档站风）：表头浅底 + 斑马纹 + hover，短内容居中
+#quarto-document-content table { margin: 1.1rem 0; }
+#quarto-document-content th {
+  background-color: rgba(127, 127, 127, .12);
+  font-weight: 600;
+  border-bottom: 2px solid rgba(127, 127, 127, .25);
+}
+#quarto-document-content th,
+#quarto-document-content td {
+  text-align: center;
+  vertical-align: middle;
+  padding: .5rem .75rem;
+}
+#quarto-document-content tbody tr:nth-child(even) { background-color: rgba(127, 127, 127, .06); }
+#quarto-document-content tbody tr:hover { background-color: rgba(57, 114, 158, .08); }

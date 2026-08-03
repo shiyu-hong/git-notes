@@ -42,4 +42,12 @@ body.quarto-dark {
   .sidebar-item-text.sidebar-link.active { color: #75A8D9; }
 
   ::selection { background-color: rgba(117, 168, 217, .25); }
+
+  // 表格深色适配
+  #quarto-document-content th {
+    background-color: rgba(127, 127, 127, .25);
+    border-bottom-color: rgba(255, 255, 255, .2);
+  }
+  #quarto-document-content tbody tr:nth-child(even) { background-color: rgba(127, 127, 127, .12); }
+  #quarto-document-content tbody tr:hover { background-color: rgba(117, 168, 217, .15); }
 }
