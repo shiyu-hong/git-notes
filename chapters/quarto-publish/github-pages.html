@@ -82,9 +82,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e347d60d51bb0b3465b414e51dcba63e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-6560b9372c5f6670d35914f38fba313e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-16bc9c130788cfd9efb6101c2b1ca8d7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-6560b9372c5f6670d35914f38fba313e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-886b1fad45ea02e1037dd06015e8bb17.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6c51bd75c20ca3b06d45d5774f5599c0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-886b1fad45ea02e1037dd06015e8bb17.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -445,17 +445,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">目录</h2>
    
   <ul>
-  <li><a href="#前置条件" id="toc-前置条件" class="nav-link active" data-scroll-target="#前置条件"><span class="header-section-number">9.1</span> 前置条件</a></li>
-  <li><a href="#原理" id="toc-原理" class="nav-link" data-scroll-target="#原理"><span class="header-section-number">9.2</span> 原理</a></li>
-  <li><a href="#新建-github-仓库" id="toc-新建-github-仓库" class="nav-link" data-scroll-target="#新建-github-仓库"><span class="header-section-number">9.3</span> 新建 GitHub 仓库</a></li>
-  <li><a href="#本地验证构建" id="toc-本地验证构建" class="nav-link" data-scroll-target="#本地验证构建"><span class="header-section-number">9.4</span> 本地验证构建</a></li>
-  <li><a href="#本地推送到-github" id="toc-本地推送到-github" class="nav-link" data-scroll-target="#本地推送到-github"><span class="header-section-number">9.5</span> 本地推送到 GitHub</a></li>
-  <li><a href="#编写发布工作流" id="toc-编写发布工作流" class="nav-link" data-scroll-target="#编写发布工作流"><span class="header-section-number">9.6</span> 编写发布工作流</a></li>
-  <li><a href="#开启-github-pages" id="toc-开启-github-pages" class="nav-link" data-scroll-target="#开启-github-pages"><span class="header-section-number">9.7</span> 开启 GitHub Pages</a></li>
-  <li><a href="#发布后的确认清单" id="toc-发布后的确认清单" class="nav-link" data-scroll-target="#发布后的确认清单"><span class="header-section-number">9.8</span> 发布后的确认清单</a></li>
-  <li><a href="#后续更新" id="toc-后续更新" class="nav-link" data-scroll-target="#后续更新"><span class="header-section-number">9.9</span> 后续更新</a></li>
-  <li><a href="#常见问题排查" id="toc-常见问题排查" class="nav-link" data-scroll-target="#常见问题排查"><span class="header-section-number">9.10</span> 常见问题排查</a></li>
-  <li><a href="#小结" id="toc-小结" class="nav-link" data-scroll-target="#小结"><span class="header-section-number">9.11</span> 小结</a></li>
+  <li><a href="#发布流程" id="toc-发布流程" class="nav-link active" data-scroll-target="#发布流程"><span class="header-section-number">9.1</span> 发布流程</a></li>
+  <li><a href="#准备发布" id="toc-准备发布" class="nav-link" data-scroll-target="#准备发布"><span class="header-section-number">9.2</span> 准备发布</a></li>
+  <li><a href="#推送到-github" id="toc-推送到-github" class="nav-link" data-scroll-target="#推送到-github"><span class="header-section-number">9.3</span> 推送到 GitHub</a>
+  <ul class="collapse">
+  <li><a href="#新建仓库" id="toc-新建仓库" class="nav-link" data-scroll-target="#新建仓库"><span class="header-section-number">9.3.1</span> 新建仓库</a></li>
+  <li><a href="#推送代码" id="toc-推送代码" class="nav-link" data-scroll-target="#推送代码"><span class="header-section-number">9.3.2</span> 推送代码</a></li>
+  </ul></li>
+  <li><a href="#配置自动发布" id="toc-配置自动发布" class="nav-link" data-scroll-target="#配置自动发布"><span class="header-section-number">9.4</span> 配置自动发布</a>
+  <ul class="collapse">
+  <li><a href="#编写工作流" id="toc-编写工作流" class="nav-link" data-scroll-target="#编写工作流"><span class="header-section-number">9.4.1</span> 编写工作流</a></li>
+  <li><a href="#开启-pages" id="toc-开启-pages" class="nav-link" data-scroll-target="#开启-pages"><span class="header-section-number">9.4.2</span> 开启 Pages</a></li>
+  </ul></li>
+  <li><a href="#验证与维护" id="toc-验证与维护" class="nav-link" data-scroll-target="#验证与维护"><span class="header-section-number">9.5</span> 验证与维护</a>
+  <ul class="collapse">
+  <li><a href="#确认清单" id="toc-确认清单" class="nav-link" data-scroll-target="#确认清单"><span class="header-section-number">9.5.1</span> 确认清单</a></li>
+  </ul></li>
+  <li><a href="#排查常见问题" id="toc-排查常见问题" class="nav-link" data-scroll-target="#排查常见问题"><span class="header-section-number">9.6</span> 排查常见问题</a>
+  <ul class="collapse">
+  <li><a href="#actions-页面找不到工作流" id="toc-actions-页面找不到工作流" class="nav-link" data-scroll-target="#actions-页面找不到工作流"><span class="header-section-number">9.6.1</span> Actions 页面找不到工作流</a></li>
+  <li><a href="#setup-quarto-步骤失败" id="toc-setup-quarto-步骤失败" class="nav-link" data-scroll-target="#setup-quarto-步骤失败"><span class="header-section-number">9.6.2</span> Setup Quarto 步骤失败</a></li>
+  <li><a href="#构建失败" id="toc-构建失败" class="nav-link" data-scroll-target="#构建失败"><span class="header-section-number">9.6.3</span> 构建失败</a></li>
+  <li><a href="#gh-pages-分支没生成" id="toc-gh-pages-分支没生成" class="nav-link" data-scroll-target="#gh-pages-分支没生成"><span class="header-section-number">9.6.4</span> gh-pages 分支没生成</a></li>
+  <li><a href="#github.io-网页找不到" id="toc-github.io-网页找不到" class="nav-link" data-scroll-target="#github.io-网页找不到"><span class="header-section-number">9.6.5</span> github.io 网页找不到</a></li>
+  </ul></li>
+  <li><a href="#总结" id="toc-总结" class="nav-link" data-scroll-target="#总结"><span class="header-section-number">9.7</span> 总结</a></li>
   </ul>
 </nav>
     </div>
@@ -482,135 +496,109 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>本章把本地写好的 Quarto book 推送到 GitHub，借助 GitHub Actions 自动构建，发布到 GitHub Pages 供在线阅读。全程只使用 GitHub 自带的免费服务，不需要额外服务器。本章只讲 Quarto book 的部署，不涉及其他发布方式。</p>
-<section id="前置条件" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="前置条件"><span class="header-section-number">9.1</span> 前置条件</h2>
-<p>开始之前，请确认已经完成：</p>
-<ul>
-<li>已完成 <a href="../../chapters/setup/common-config.html">环境配置</a>（身份信息、SSH 密钥已配置到 GitHub）</li>
-<li>本地已能构建：在项目根目录执行 <code>quarto render</code> 无报错，输出到 <code>docs/</code> 目录</li>
-<li>一个要发布的内容仓库（本书就是练习对象）</li>
-</ul>
-</section>
-<section id="原理" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="原理"><span class="header-section-number">9.2</span> 原理</h2>
-<p>GitHub Pages 是 GitHub 提供的静态网页托管服务，可以直接通过 <code>https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/</code> 访问仓库中的静态文件。</p>
-<p>Quarto book 构建出的 HTML 是纯静态文件，天然适合托管。发布流程如下：</p>
+<p>本章把本地写好的 Quarto book 推送到 GitHub，借助 GitHub Actions 自动构建，发布到 GitHub Pages 供在线阅读。全程只使用 GitHub 自带的服务，无需额外服务器。内容只涉及 Quarto book 的部署，不涉及其他发布方式。</p>
+<section id="发布流程" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="发布流程"><span class="header-section-number">9.1</span> 发布流程</h2>
+<p>GitHub Pages 是 GitHub 提供的静态网页托管服务，仓库里的静态文件通过 <code>https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/</code> 直接访问，例如本笔记的 <a href="https://shiyu-hong.github.io/git-notes/">shiyu-hong.github.io/git-notes</a>。Quarto book 构建出的 HTML 是纯静态文件，天然适合托管。完整流程：</p>
 <ol type="1">
-<li>在本地用 <code>quarto render</code> 构建出 <code>docs/</code> 目录</li>
-<li>把源码推送到 GitHub 仓库的 <code>main</code> 分支</li>
-<li>GitHub Actions 检测到推送后自动重新构建，并把产物发布到 <code>gh-pages</code> 分支</li>
-<li>GitHub Pages 从 <code>gh-pages</code> 分支读取文件并对外提供访问</li>
+<li><strong>构建</strong>：本地 <code>quarto render</code> 生成 <code>docs/</code></li>
+<li><strong>推送</strong>：把源码推送到 <code>main</code> 分支</li>
+<li><strong>自动构建</strong>：GitHub Actions 重新构建，把产物发布到 <code>gh-pages</code> 分支</li>
+<li><strong>托管</strong>：GitHub Pages 从 <code>gh-pages</code> 分支提供访问</li>
 </ol>
 <blockquote class="blockquote">
-<p><strong>提示</strong>：构建在云端自动完成，你只需要把源码推上去，这正是 GitHub Actions 的价值。</p>
+<p><strong>提示</strong>：构建在云端自动完成，你只需把源码推上去，这正是 GitHub Actions 的价值。</p>
 </blockquote>
-<p>下面出现的几个 GitHub Actions 术语，先了解即可：</p>
-<ul>
-<li><strong>Workflow</strong>：一份自动化流程定义，即 <code>.github/workflows/</code> 下的 YAML 文件</li>
-<li><strong>Job</strong>：工作流里的一个任务，在独立的运行环境中执行</li>
-<li><strong>Step</strong>：任务内的一个步骤，按顺序执行（如「检出代码」「运行构建」）</li>
-<li><strong>Action</strong>：一个可复用的步骤实现，用 <code>uses:</code> 引用（如 <code>actions/checkout</code>）</li>
-<li><strong>Runner</strong>：执行任务的虚拟机器，这里用的是 GitHub 免费提供的 <code>ubuntu-latest</code></li>
-</ul>
 </section>
-<section id="新建-github-仓库" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="新建-github-仓库"><span class="header-section-number">9.3</span> 新建 GitHub 仓库</h2>
+<section id="准备发布" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="准备发布"><span class="header-section-number">9.2</span> 准备发布</h2>
+<p>推送前，先在本地确认两件事：环境已配好，构建能顺利通过。如此推送到 GitHub 后，云端 Actions 的构建才能一次成功。</p>
+<ul>
+<li>已完成 <a href="../../chapters/setup/common-config.html">环境配置</a>（身份信息、SSH 密钥已配置到 GitHub）</li>
+<li>本地构建通过：<code>quarto render</code> 能成功生成 <code>docs/</code> 目录</li>
+</ul>
+<p>构建命令：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>这一步用来验证构建有效——<code>docs/</code> 正是之后要发布的内容，本地能生成，云端重新构建时才不至于在 <code>quarto render</code> 处报错。输出类似 <code>Output created: docs\index.html</code> 即视为成功；若报错，先在本地解决，再继续推送。</p>
+</section>
+<section id="推送到-github" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="推送到-github"><span class="header-section-number">9.3</span> 推送到 GitHub</h2>
+<section id="新建仓库" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="新建仓库"><span class="header-section-number">9.3.1</span> 新建仓库</h3>
 <ol type="1">
 <li>登录 GitHub，点击右上角 <strong>+</strong> → <strong>New repository</strong></li>
-<li>Repository name 填写仓库名（如 <code>git-notes</code>）</li>
-<li>选择 <strong>Public</strong>（公开）</li>
-<li><strong>不要</strong>勾选 Add a README file、Add .gitignore、Choose a license，保持空仓库</li>
+<li>Repository name 填仓库名（如 <code>git-notes</code>）</li>
+<li>选择 <strong>Public</strong>，<strong>不要</strong>勾选 README/.gitignore/license</li>
 <li>点击 <strong>Create repository</strong></li>
 </ol>
 <blockquote class="blockquote">
-<p><strong>注意</strong>：免费账户的 GitHub Pages 只支持公开仓库，私有仓库无法在线托管，所以这里选择 Public。</p>
+<p><strong>注意</strong>：免费账户的 GitHub Pages 只支持公开仓库。创建时若勾选了 README 或 license，GitHub 会先建一个 initial commit，首次 <code>git push</code> 会被拒（报 <code>fetch first</code>），先 <code>git pull origin main --allow-unrelated-histories</code> 合并再推送即可，合并后仓库里会多出 GitHub 生成的 README/LICENSE 文件。</p>
 </blockquote>
+</section>
+<section id="推送代码" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="推送代码"><span class="header-section-number">9.3.2</span> 推送代码</h3>
+<p>在项目根目录初始化仓库并推送：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"feat: 初始化 Git 笔记 quarto book"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com:<span class="op">&lt;</span>你的用户名<span class="op">&gt;</span>/<span class="op">&lt;</span>仓库名<span class="op">&gt;</span>.git</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>使用 HTTPS 则把 remote 地址换成：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin https://github.com/<span class="op">&lt;</span>你的用户名<span class="op">&gt;</span>/<span class="op">&lt;</span>仓库名<span class="op">&gt;</span>.git</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
-<p><strong>注意</strong>：创建仓库时如果勾选了 README 或 license 等选项，GitHub 会先生成一个 initial commit，本地仓库与远端各有一套互不相关的历史，首次 <code>git push</code> 会被拒绝（报 <code>fetch first</code>）。解法是拉取远端历史再合并：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin main <span class="at">--allow-unrelated-histories</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>合并后仓库里会多出 GitHub 生成的 README 或 LICENSE 文件，属正常现象。</p>
+<p><strong>注意</strong>：这里使用 <a href="../../chapters/setup/common-config.html">环境配置</a> 配置好的 SSH 方式。SSH 与 HTTPS 任选其一，不要混用。</p>
 </blockquote>
 </section>
-<section id="本地验证构建" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="本地验证构建"><span class="header-section-number">9.4</span> 本地验证构建</h2>
-<p>推送前先在本地构建一次，确认能正常生成 <code>docs/</code>：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>构建成功会输出类似 <code>Output created: docs\index.html</code>，并生成 <code>docs/</code> 目录。如果这一步就报错，先解决构建问题再继续，不要带着报错推送。</p>
 </section>
-<section id="本地推送到-github" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="本地推送到-github"><span class="header-section-number">9.5</span> 本地推送到 GitHub</h2>
-<p>在本项目根目录初始化仓库并推送：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"feat: 初始化 Git 笔记 quarto book"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-M</span> main</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin git@github.com:<span class="op">&lt;</span>你的用户名<span class="op">&gt;</span>/<span class="op">&lt;</span>仓库名<span class="op">&gt;</span>.git</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<blockquote class="blockquote">
-<p><strong>注意</strong>：这里使用上一章配置好的 SSH 方式。如果使用 HTTPS，把地址换成 <code>https://github.com/&lt;你的用户名&gt;/&lt;仓库名&gt;.git</code>。</p>
-</blockquote>
-</section>
-<section id="编写发布工作流" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="编写发布工作流"><span class="header-section-number">9.6</span> 编写发布工作流</h2>
+<section id="配置自动发布" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="配置自动发布"><span class="header-section-number">9.4</span> 配置自动发布</h2>
+<section id="编写工作流" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="编写工作流"><span class="header-section-number">9.4.1</span> 编写工作流</h3>
 <p>在项目根目录创建 <code>.github/workflows/publish.yml</code>：</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> publish docs</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">permissions</span><span class="kw">:</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">build-and-deploy</span><span class="kw">:</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Quarto</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/setup@v2</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">version</span><span class="kw">:</span><span class="at"> release</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Render book</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> quarto render</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Deploy to GitHub Pages</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> peaceiris/actions-gh-pages@v4</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">github_token</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">publish_dir</span><span class="kw">:</span><span class="at"> ./docs</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
-<p>逐行看这个文件做了什么：</p>
-<ul>
-<li><code>name: publish docs</code>：工作流名称，显示在 <strong>Actions</strong> 页面</li>
-<li><code>on: push</code> <code>branches: [main]</code>：触发条件，推送到 <code>main</code> 分支时运行</li>
-<li><code>permissions: contents: write</code>：授予工作流写仓库内容的权限，发布产物需要它</li>
-<li><code>jobs:</code>：一个工作流可以包含多个任务，这里只有一个</li>
-<li><code>build-and-deploy</code>：任务名称，可以随意起</li>
-<li><code>runs-on: ubuntu-latest</code>：运行环境，GitHub 免费提供的 Linux 虚拟机</li>
-<li><code>steps:</code>：任务内的步骤列表，从上到下依次执行</li>
-<li><code>uses: actions/checkout@v4</code>：调用 GitHub 官方 action，把仓库源码检出到运行环境</li>
-<li><code>uses: quarto-dev/quarto-actions/setup@v2</code>：调用 Quarto 官方 action 安装 Quarto</li>
-<li><code>version: release</code>：传给该 action 的参数，安装最新稳定版 Quarto。合法值还有 <code>pre-release</code>（最新开发版）或具体版本号（如 <code>1.5.57</code>）；<code>latest</code> <strong>不是</strong>合法值</li>
-<li><code>run: quarto render</code>：执行命令，构建产物输出到 <code>docs/</code></li>
-<li><code>uses: peaceiris/actions-gh-pages@v4</code>：调用第三方 action，把指定目录发布到 <code>gh-pages</code> 分支</li>
-<li><code>publish_dir: ./docs</code>：指定发布 <code>docs/</code> 目录</li>
-<li><code>github_token: ${{ secrets.GITHUB_TOKEN }}</code>：GitHub 自动生成的临时令牌，授权发布操作</li>
-</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 工作流名称，显示在 Actions 页面</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> publish docs</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">main</span><span class="kw">]</span><span class="co">      # 触发条件：推送到 main 分支时运行</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span><span class="co">         # 授予工作流写仓库内容的权限，发布产物需要</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">build-and-deploy</span><span class="kw">:</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Checkout</span><span class="co">    # 检出仓库源码</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Quarto</span><span class="co">   # 安装 Quarto（version 用 release 取最新稳定版）</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/setup@v2</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">version</span><span class="kw">:</span><span class="at"> release</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Render book</span><span class="co">    # 执行构建，产物输出到 docs/</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> quarto render</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Deploy to GitHub Pages</span><span class="co">   # 把 docs/ 发布到 gh-pages 分支</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> peaceiris/actions-gh-pages@v4</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">github_token</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">publish_dir</span><span class="kw">:</span><span class="at"> ./docs</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>提示</strong>：<code>#</code> 注释已解释各行作用，核心三步：检出 → 构建 → 发布。<code>version</code> 用 <code>release</code> 取最新稳定版，<code>latest</code> 不是合法值。</p>
+</blockquote>
 <p>把工作流提交并推送：</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .github/workflows/publish.yml</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"ci: 添加 GitHub Pages 发布工作流"</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
-<p><strong>注意</strong>：构建需要下载 Quarto，首次运行可能需要一两分钟，属于正常现象。</p>
+<p><strong>注意</strong>：首次运行需下载 Quarto，可能耗时一两分钟。</p>
 </blockquote>
 </section>
-<section id="开启-github-pages" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="开启-github-pages"><span class="header-section-number">9.7</span> 开启 GitHub Pages</h2>
+<section id="开启-pages" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="开启-pages"><span class="header-section-number">9.4.2</span> 开启 Pages</h3>
 <p>工作流首次发布成功后，还需要让仓库从 <code>gh-pages</code> 分支提供页面：</p>
 <ol type="1">
 <li>打开仓库的 <strong>Settings</strong> → <strong>Pages</strong></li>
@@ -618,39 +606,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Branch 选择 <code>gh-pages</code>，目录选择 <code>/ (root)</code></li>
 <li>点击 <strong>Save</strong></li>
 </ol>
-<p>设置完成后，页面会显示访问地址：<code>https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/</code></p>
+<p>设置完成后，页面会显示访问地址：<code>https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/</code>。以本笔记为参考，成品在 <a href="https://shiyu-hong.github.io/git-notes/">shiyu-hong.github.io/git-notes</a>，源码见 <a href="https://github.com/shiyu-hong/git-notes">github.com/shiyu-hong/git-notes</a>。</p>
+<blockquote class="blockquote">
+<p><strong>提示</strong>：设置页的「Learn how to add a Jekyll theme」是通用提示，与本项目无关；<code>gh-pages</code> 分支里的 <code>.nojekyll</code> 空文件（发布 action 自动生成）已让 GitHub 按静态文件直接服务。</p>
+</blockquote>
 </section>
-<section id="发布后的确认清单" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="发布后的确认清单"><span class="header-section-number">9.8</span> 发布后的确认清单</h2>
-<p>发布完成后，按顺序确认三点：</p>
-<ul>
-<li><strong>Actions</strong> 页面：名为 <code>publish docs</code> 的工作流显示绿色勾，表示构建发布成功</li>
-<li><strong>Pages</strong> 设置页：显示 <code>Your site is live at https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/</code></li>
-<li>浏览器打开上面的地址，能看到你的笔记首页</li>
-</ul>
 </section>
-<section id="后续更新" class="level2" data-number="9.9">
-<h2 data-number="9.9" class="anchored" data-anchor-id="后续更新"><span class="header-section-number">9.9</span> 后续更新</h2>
-<p>之后每次推送到 <code>main</code> 分支，Actions 都会自动重新构建并更新线上内容：</p>
+<section id="验证与维护" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="验证与维护"><span class="header-section-number">9.5</span> 验证与维护</h2>
+<section id="确认清单" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="确认清单"><span class="header-section-number">9.5.1</span> 确认清单</h3>
+<p>发布完成后依次确认：<strong>Actions</strong> 页面 <code>publish docs</code> 显示 ✅；<strong>Pages</strong> 设置页显示 <code>Your site is live</code>；浏览器打开「开启 Pages」里的访问地址，能看到笔记首页。</p>
+<p>之后每次改动，用同一套流程推送即可，Actions 会自动重新部署：</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"docs: 更新某章节"</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="常见问题排查" class="level2" data-number="9.10">
-<h2 data-number="9.10" class="anchored" data-anchor-id="常见问题排查"><span class="header-section-number">9.10</span> 常见问题排查</h2>
-<p>推送后若 <code>gh-pages</code> 分支没有生成，先打开仓库的 <strong>Actions</strong> 页面：找到最近一次 <code>publish docs</code> 运行记录，如果显示红叉就点进去，看哪个步骤标红，展开日志查看具体报错，再对照下面排查。</p>
-<ul>
-<li><strong>Setup Quarto 步骤失败（exit code 8）</strong>：多半是工作流里写了 <code>version: latest</code>。<code>latest</code> 不是 <code>quarto-dev/quarto-actions/setup</code> 的合法值，action 会去下载 <code>vlatest</code> 的安装包导致 404。把它改成 <code>version: release</code>，重新提交推送。</li>
-<li><strong>Actions 页面找不到工作流</strong>：<code>.github/workflows/publish.yml</code> 没有提交，或提交后没推送到 <code>main</code> 分支。检查文件位置是否正确，再 <code>git push</code> 一次。</li>
-<li><strong>构建失败（红叉）</strong>：点进失败的 job 查看日志。常见原因是下载 Quarto 超时，在 <strong>Actions</strong> 页面点击 <strong>Re-run all jobs</strong> 重跑即可。</li>
-<li><strong><code>gh-pages</code> 分支没生成</strong>：说明工作流失败，发布步骤不会执行。先修好失败步骤，再推送一次；工作流成功（绿勾）后分支才会出现。</li>
-<li><strong>页面打不开 404</strong>：多数是 <strong>Settings</strong> → <strong>Pages</strong> 的 Source 没选 <code>gh-pages</code> 分支，或还没点 Save。按上文重新设置。</li>
-<li><strong>SSH 认证失败（Permission denied）</strong>：密钥没添加到 GitHub 或代理没启动。回到 <a href="../../chapters/setup/common-config.html">环境配置</a> 用 <code>ssh -T git@github.com</code> 重新验证。</li>
-<li><strong>仓库名正好是 <code>&lt;用户名&gt;.github.io</code></strong>：这种仓库比较特殊，GitHub Pages 会直接部署到根域名 <code>https://&lt;用户名&gt;.github.io/</code>，访问地址里没有仓库名。一个账号只能有一个这样的仓库。</li>
-</ul>
 </section>
-<section id="小结" class="level2" data-number="9.11">
-<h2 data-number="9.11" class="anchored" data-anchor-id="小结"><span class="header-section-number">9.11</span> 小结</h2>
+<section id="排查常见问题" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="排查常见问题"><span class="header-section-number">9.6</span> 排查常见问题</h2>
+<p><code>gh-pages</code> 分支没生成时，先到 <strong>Actions</strong> 页面看最近一次 <code>publish docs</code> 的运行：若显示 ❌，点进该运行，查看标红步骤的日志，再对照下面排查。</p>
+<section id="actions-页面找不到工作流" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="actions-页面找不到工作流"><span class="header-section-number">9.6.1</span> Actions 页面找不到工作流</h3>
+<p><code>publish.yml</code> 没有提交，或没推送到 <code>main</code> 分支。确认文件在 <code>.github/workflows/</code> 下，重新提交并推送一次即可。</p>
+</section>
+<section id="setup-quarto-步骤失败" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="setup-quarto-步骤失败"><span class="header-section-number">9.6.2</span> Setup Quarto 步骤失败</h3>
+<p><code>version: latest</code> 不是 <code>quarto-dev/quarto-actions/setup</code> 的合法值，action 会去下载 <code>vlatest</code> 的安装包导致 404。把工作流里的 <code>version</code> 改成 <code>release</code>，提交并推送：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .github/workflows/publish.yml</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"ci: 修复 Quarto 版本参数"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="构建失败" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="构建失败"><span class="header-section-number">9.6.3</span> 构建失败</h3>
+<p>常见是构建时下载 Quarto 超时，或工作流写错。点进失败的 job 看日志；若是超时，在 <strong>Actions</strong> 页面点击 <strong>Re-run all jobs</strong> 重跑即可。</p>
+</section>
+<section id="gh-pages-分支没生成" class="level3" data-number="9.6.4">
+<h3 data-number="9.6.4" class="anchored" data-anchor-id="gh-pages-分支没生成"><span class="header-section-number">9.6.4</span> gh-pages 分支没生成</h3>
+<p>工作流失败时发布步骤不会执行，成功（✅）后分支才出现。先修好失败步骤，再推送一次。</p>
+</section>
+<section id="github.io-网页找不到" class="level3" data-number="9.6.5">
+<h3 data-number="9.6.5" class="anchored" data-anchor-id="github.io-网页找不到"><span class="header-section-number">9.6.5</span> github.io 网页找不到</h3>
+<p>访问地址打不开，多数是 <strong>Settings</strong> → <strong>Pages</strong> 的 Source 没选 <code>gh-pages</code> 分支，或没点 <strong>Save</strong>。若仓库名恰好是 <code>&lt;用户名&gt;.github.io</code>，页面会部署到根域名 <code>https://&lt;用户名&gt;.github.io/</code>，地址里没有仓库名，用根域名访问。</p>
+</section>
+</section>
+<section id="总结" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="总结"><span class="header-section-number">9.7</span> 总结</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -681,7 +682,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>至此，你的 Git 笔记已经可以在线访问了。</p>
+<p>至此，您的 Git 笔记已经可以在线访问了。</p>
 
 
 </section>

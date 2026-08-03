@@ -229,128 +229,84 @@
     "href": "chapters/quarto-publish/github-pages.html",
     "title": "9  Quarto 发布到 GitHub Pages",
     "section": "",
-    "text": "9.1 前置条件\n本章把本地写好的 Quarto book 推送到 GitHub，借助 GitHub Actions 自动构建，发布到 GitHub Pages 供在线阅读。全程只使用 GitHub 自带的免费服务，不需要额外服务器。本章只讲 Quarto book 的部署，不涉及其他发布方式。\n开始之前，请确认已经完成：",
+    "text": "9.1 发布流程\n本章把本地写好的 Quarto book 推送到 GitHub，借助 GitHub Actions 自动构建，发布到 GitHub Pages 供在线阅读。全程只使用 GitHub 自带的服务，无需额外服务器。内容只涉及 Quarto book 的部署，不涉及其他发布方式。\nGitHub Pages 是 GitHub 提供的静态网页托管服务，仓库里的静态文件通过 https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/ 直接访问，例如本笔记的 shiyu-hong.github.io/git-notes。Quarto book 构建出的 HTML 是纯静态文件，天然适合托管。完整流程：",
     "crumbs": [
       "Quarto 发布与部署",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
     ]
   },
   {
-    "objectID": "chapters/quarto-publish/github-pages.html#前置条件",
-    "href": "chapters/quarto-publish/github-pages.html#前置条件",
+    "objectID": "chapters/quarto-publish/github-pages.html#发布流程",
+    "href": "chapters/quarto-publish/github-pages.html#发布流程",
     "title": "9  Quarto 发布到 GitHub Pages",
     "section": "",
-    "text": "已完成 环境配置（身份信息、SSH 密钥已配置到 GitHub）\n本地已能构建：在项目根目录执行 quarto render 无报错，输出到 docs/ 目录\n一个要发布的内容仓库（本书就是练习对象）",
+    "text": "构建：本地 quarto render 生成 docs/\n推送：把源码推送到 main 分支\n自动构建：GitHub Actions 重新构建，把产物发布到 gh-pages 分支\n托管：GitHub Pages 从 gh-pages 分支提供访问\n\n\n提示：构建在云端自动完成，你只需把源码推上去，这正是 GitHub Actions 的价值。",
     "crumbs": [
       "Quarto 发布与部署",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
     ]
   },
   {
-    "objectID": "chapters/quarto-publish/github-pages.html#原理",
-    "href": "chapters/quarto-publish/github-pages.html#原理",
+    "objectID": "chapters/quarto-publish/github-pages.html#准备发布",
+    "href": "chapters/quarto-publish/github-pages.html#准备发布",
     "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.2 原理",
-    "text": "9.2 原理\nGitHub Pages 是 GitHub 提供的静态网页托管服务，可以直接通过 https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/ 访问仓库中的静态文件。\nQuarto book 构建出的 HTML 是纯静态文件，天然适合托管。发布流程如下：\n\n在本地用 quarto render 构建出 docs/ 目录\n把源码推送到 GitHub 仓库的 main 分支\nGitHub Actions 检测到推送后自动重新构建，并把产物发布到 gh-pages 分支\nGitHub Pages 从 gh-pages 分支读取文件并对外提供访问\n\n\n提示：构建在云端自动完成，你只需要把源码推上去，这正是 GitHub Actions 的价值。\n\n下面出现的几个 GitHub Actions 术语，先了解即可：\n\nWorkflow：一份自动化流程定义，即 .github/workflows/ 下的 YAML 文件\nJob：工作流里的一个任务，在独立的运行环境中执行\nStep：任务内的一个步骤，按顺序执行（如「检出代码」「运行构建」）\nAction：一个可复用的步骤实现，用 uses: 引用（如 actions/checkout）\nRunner：执行任务的虚拟机器，这里用的是 GitHub 免费提供的 ubuntu-latest",
+    "section": "9.2 准备发布",
+    "text": "9.2 准备发布\n推送前，先在本地确认两件事：环境已配好，构建能顺利通过。如此推送到 GitHub 后，云端 Actions 的构建才能一次成功。\n\n已完成 环境配置（身份信息、SSH 密钥已配置到 GitHub）\n本地构建通过：quarto render 能成功生成 docs/ 目录\n\n构建命令：\nquarto render\n这一步用来验证构建有效——docs/ 正是之后要发布的内容，本地能生成，云端重新构建时才不至于在 quarto render 处报错。输出类似 Output created: docs\\index.html 即视为成功；若报错，先在本地解决，再继续推送。",
     "crumbs": [
       "Quarto 发布与部署",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
     ]
   },
   {
-    "objectID": "chapters/quarto-publish/github-pages.html#新建-github-仓库",
-    "href": "chapters/quarto-publish/github-pages.html#新建-github-仓库",
+    "objectID": "chapters/quarto-publish/github-pages.html#推送到-github",
+    "href": "chapters/quarto-publish/github-pages.html#推送到-github",
     "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.3 新建 GitHub 仓库",
-    "text": "9.3 新建 GitHub 仓库\n\n登录 GitHub，点击右上角 + → New repository\nRepository name 填写仓库名（如 git-notes）\n选择 Public（公开）\n不要勾选 Add a README file、Add .gitignore、Choose a license，保持空仓库\n点击 Create repository\n\n\n注意：免费账户的 GitHub Pages 只支持公开仓库，私有仓库无法在线托管，所以这里选择 Public。\n\n\n注意：创建仓库时如果勾选了 README 或 license 等选项，GitHub 会先生成一个 initial commit，本地仓库与远端各有一套互不相关的历史，首次 git push 会被拒绝（报 fetch first）。解法是拉取远端历史再合并：\ngit pull origin main --allow-unrelated-histories\ngit push\n合并后仓库里会多出 GitHub 生成的 README 或 LICENSE 文件，属正常现象。",
+    "section": "9.3 推送到 GitHub",
+    "text": "9.3 推送到 GitHub\n\n9.3.1 新建仓库\n\n登录 GitHub，点击右上角 + → New repository\nRepository name 填仓库名（如 git-notes）\n选择 Public，不要勾选 README/.gitignore/license\n点击 Create repository\n\n\n注意：免费账户的 GitHub Pages 只支持公开仓库。创建时若勾选了 README 或 license，GitHub 会先建一个 initial commit，首次 git push 会被拒（报 fetch first），先 git pull origin main --allow-unrelated-histories 合并再推送即可，合并后仓库里会多出 GitHub 生成的 README/LICENSE 文件。\n\n\n\n9.3.2 推送代码\n在项目根目录初始化仓库并推送：\ngit init\ngit add .\ngit commit -m \"feat: 初始化 Git 笔记 quarto book\"\ngit branch -M main\ngit remote add origin git@github.com:&lt;你的用户名&gt;/&lt;仓库名&gt;.git\ngit push -u origin main\n使用 HTTPS 则把 remote 地址换成：\ngit remote add origin https://github.com/&lt;你的用户名&gt;/&lt;仓库名&gt;.git\n\n注意：这里使用 环境配置 配置好的 SSH 方式。SSH 与 HTTPS 任选其一，不要混用。",
     "crumbs": [
       "Quarto 发布与部署",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
     ]
   },
   {
-    "objectID": "chapters/quarto-publish/github-pages.html#本地验证构建",
-    "href": "chapters/quarto-publish/github-pages.html#本地验证构建",
+    "objectID": "chapters/quarto-publish/github-pages.html#配置自动发布",
+    "href": "chapters/quarto-publish/github-pages.html#配置自动发布",
     "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.4 本地验证构建",
-    "text": "9.4 本地验证构建\n推送前先在本地构建一次，确认能正常生成 docs/：\nquarto render\n构建成功会输出类似 Output created: docs\\index.html，并生成 docs/ 目录。如果这一步就报错，先解决构建问题再继续，不要带着报错推送。",
+    "section": "9.4 配置自动发布",
+    "text": "9.4 配置自动发布\n\n9.4.1 编写工作流\n在项目根目录创建 .github/workflows/publish.yml：\n# 工作流名称，显示在 Actions 页面\nname: publish docs\n\non:\n  push:\n    branches: [main]      # 触发条件：推送到 main 分支时运行\n\npermissions:\n  contents: write         # 授予工作流写仓库内容的权限，发布产物需要\n\njobs:\n  build-and-deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout    # 检出仓库源码\n        uses: actions/checkout@v4\n\n      - name: Setup Quarto   # 安装 Quarto（version 用 release 取最新稳定版）\n        uses: quarto-dev/quarto-actions/setup@v2\n        with:\n          version: release\n\n      - name: Render book    # 执行构建，产物输出到 docs/\n        run: quarto render\n\n      - name: Deploy to GitHub Pages   # 把 docs/ 发布到 gh-pages 分支\n        uses: peaceiris/actions-gh-pages@v4\n        with:\n          github_token: ${{ secrets.GITHUB_TOKEN }}\n          publish_dir: ./docs\n\n提示：# 注释已解释各行作用，核心三步：检出 → 构建 → 发布。version 用 release 取最新稳定版，latest 不是合法值。\n\n把工作流提交并推送：\ngit add .github/workflows/publish.yml\ngit commit -m \"ci: 添加 GitHub Pages 发布工作流\"\ngit push\n\n注意：首次运行需下载 Quarto，可能耗时一两分钟。\n\n\n\n9.4.2 开启 Pages\n工作流首次发布成功后，还需要让仓库从 gh-pages 分支提供页面：\n\n打开仓库的 Settings → Pages\n在 Source 处选择 Deploy from a branch\nBranch 选择 gh-pages，目录选择 / (root)\n点击 Save\n\n设置完成后，页面会显示访问地址：https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/。以本笔记为参考，成品在 shiyu-hong.github.io/git-notes，源码见 github.com/shiyu-hong/git-notes。\n\n提示：设置页的「Learn how to add a Jekyll theme」是通用提示，与本项目无关；gh-pages 分支里的 .nojekyll 空文件（发布 action 自动生成）已让 GitHub 按静态文件直接服务。",
     "crumbs": [
       "Quarto 发布与部署",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
     ]
   },
   {
-    "objectID": "chapters/quarto-publish/github-pages.html#本地推送到-github",
-    "href": "chapters/quarto-publish/github-pages.html#本地推送到-github",
+    "objectID": "chapters/quarto-publish/github-pages.html#验证与维护",
+    "href": "chapters/quarto-publish/github-pages.html#验证与维护",
     "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.5 本地推送到 GitHub",
-    "text": "9.5 本地推送到 GitHub\n在本项目根目录初始化仓库并推送：\ngit init\ngit add .\ngit commit -m \"feat: 初始化 Git 笔记 quarto book\"\ngit branch -M main\ngit remote add origin git@github.com:&lt;你的用户名&gt;/&lt;仓库名&gt;.git\ngit push -u origin main\n\n注意：这里使用上一章配置好的 SSH 方式。如果使用 HTTPS，把地址换成 https://github.com/&lt;你的用户名&gt;/&lt;仓库名&gt;.git。",
+    "section": "9.5 验证与维护",
+    "text": "9.5 验证与维护\n\n9.5.1 确认清单\n发布完成后依次确认：Actions 页面 publish docs 显示 ✅；Pages 设置页显示 Your site is live；浏览器打开「开启 Pages」里的访问地址，能看到笔记首页。\n之后每次改动，用同一套流程推送即可，Actions 会自动重新部署：\ngit add .\ngit commit -m \"docs: 更新某章节\"\ngit push",
     "crumbs": [
       "Quarto 发布与部署",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
     ]
   },
   {
-    "objectID": "chapters/quarto-publish/github-pages.html#编写发布工作流",
-    "href": "chapters/quarto-publish/github-pages.html#编写发布工作流",
+    "objectID": "chapters/quarto-publish/github-pages.html#排查常见问题",
+    "href": "chapters/quarto-publish/github-pages.html#排查常见问题",
     "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.6 编写发布工作流",
-    "text": "9.6 编写发布工作流\n在项目根目录创建 .github/workflows/publish.yml：\nname: publish docs\n\non:\n  push:\n    branches: [main]\n\npermissions:\n  contents: write\n\njobs:\n  build-and-deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout\n        uses: actions/checkout@v4\n\n      - name: Setup Quarto\n        uses: quarto-dev/quarto-actions/setup@v2\n        with:\n          version: release\n\n      - name: Render book\n        run: quarto render\n\n      - name: Deploy to GitHub Pages\n        uses: peaceiris/actions-gh-pages@v4\n        with:\n          github_token: ${{ secrets.GITHUB_TOKEN }}\n          publish_dir: ./docs\n逐行看这个文件做了什么：\n\nname: publish docs：工作流名称，显示在 Actions 页面\non: push branches: [main]：触发条件，推送到 main 分支时运行\npermissions: contents: write：授予工作流写仓库内容的权限，发布产物需要它\njobs:：一个工作流可以包含多个任务，这里只有一个\nbuild-and-deploy：任务名称，可以随意起\nruns-on: ubuntu-latest：运行环境，GitHub 免费提供的 Linux 虚拟机\nsteps:：任务内的步骤列表，从上到下依次执行\nuses: actions/checkout@v4：调用 GitHub 官方 action，把仓库源码检出到运行环境\nuses: quarto-dev/quarto-actions/setup@v2：调用 Quarto 官方 action 安装 Quarto\nversion: release：传给该 action 的参数，安装最新稳定版 Quarto。合法值还有 pre-release（最新开发版）或具体版本号（如 1.5.57）；latest 不是合法值\nrun: quarto render：执行命令，构建产物输出到 docs/\nuses: peaceiris/actions-gh-pages@v4：调用第三方 action，把指定目录发布到 gh-pages 分支\npublish_dir: ./docs：指定发布 docs/ 目录\ngithub_token: ${{ secrets.GITHUB_TOKEN }}：GitHub 自动生成的临时令牌，授权发布操作\n\n把工作流提交并推送：\ngit add .github/workflows/publish.yml\ngit commit -m \"ci: 添加 GitHub Pages 发布工作流\"\ngit push\n\n注意：构建需要下载 Quarto，首次运行可能需要一两分钟，属于正常现象。",
+    "section": "9.6 排查常见问题",
+    "text": "9.6 排查常见问题\ngh-pages 分支没生成时，先到 Actions 页面看最近一次 publish docs 的运行：若显示 ❌，点进该运行，查看标红步骤的日志，再对照下面排查。\n\n9.6.1 Actions 页面找不到工作流\npublish.yml 没有提交，或没推送到 main 分支。确认文件在 .github/workflows/ 下，重新提交并推送一次即可。\n\n\n9.6.2 Setup Quarto 步骤失败\nversion: latest 不是 quarto-dev/quarto-actions/setup 的合法值，action 会去下载 vlatest 的安装包导致 404。把工作流里的 version 改成 release，提交并推送：\ngit add .github/workflows/publish.yml\ngit commit -m \"ci: 修复 Quarto 版本参数\"\ngit push\n\n\n9.6.3 构建失败\n常见是构建时下载 Quarto 超时，或工作流写错。点进失败的 job 看日志；若是超时，在 Actions 页面点击 Re-run all jobs 重跑即可。\n\n\n9.6.4 gh-pages 分支没生成\n工作流失败时发布步骤不会执行，成功（✅）后分支才出现。先修好失败步骤，再推送一次。\n\n\n9.6.5 github.io 网页找不到\n访问地址打不开，多数是 Settings → Pages 的 Source 没选 gh-pages 分支，或没点 Save。若仓库名恰好是 &lt;用户名&gt;.github.io，页面会部署到根域名 https://&lt;用户名&gt;.github.io/，地址里没有仓库名，用根域名访问。",
     "crumbs": [
       "Quarto 发布与部署",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
     ]
   },
   {
-    "objectID": "chapters/quarto-publish/github-pages.html#开启-github-pages",
-    "href": "chapters/quarto-publish/github-pages.html#开启-github-pages",
+    "objectID": "chapters/quarto-publish/github-pages.html#总结",
+    "href": "chapters/quarto-publish/github-pages.html#总结",
     "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.7 开启 GitHub Pages",
-    "text": "9.7 开启 GitHub Pages\n工作流首次发布成功后，还需要让仓库从 gh-pages 分支提供页面：\n\n打开仓库的 Settings → Pages\n在 Source 处选择 Deploy from a branch\nBranch 选择 gh-pages，目录选择 / (root)\n点击 Save\n\n设置完成后，页面会显示访问地址：https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/",
-    "crumbs": [
-      "Quarto 发布与部署",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
-    ]
-  },
-  {
-    "objectID": "chapters/quarto-publish/github-pages.html#发布后的确认清单",
-    "href": "chapters/quarto-publish/github-pages.html#发布后的确认清单",
-    "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.8 发布后的确认清单",
-    "text": "9.8 发布后的确认清单\n发布完成后，按顺序确认三点：\n\nActions 页面：名为 publish docs 的工作流显示绿色勾，表示构建发布成功\nPages 设置页：显示 Your site is live at https://&lt;用户名&gt;.github.io/&lt;仓库名&gt;/\n浏览器打开上面的地址，能看到你的笔记首页",
-    "crumbs": [
-      "Quarto 发布与部署",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
-    ]
-  },
-  {
-    "objectID": "chapters/quarto-publish/github-pages.html#后续更新",
-    "href": "chapters/quarto-publish/github-pages.html#后续更新",
-    "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.9 后续更新",
-    "text": "9.9 后续更新\n之后每次推送到 main 分支，Actions 都会自动重新构建并更新线上内容：\ngit add .\ngit commit -m \"docs: 更新某章节\"\ngit push",
-    "crumbs": [
-      "Quarto 发布与部署",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
-    ]
-  },
-  {
-    "objectID": "chapters/quarto-publish/github-pages.html#常见问题排查",
-    "href": "chapters/quarto-publish/github-pages.html#常见问题排查",
-    "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.10 常见问题排查",
-    "text": "9.10 常见问题排查\n推送后若 gh-pages 分支没有生成，先打开仓库的 Actions 页面：找到最近一次 publish docs 运行记录，如果显示红叉就点进去，看哪个步骤标红，展开日志查看具体报错，再对照下面排查。\n\nSetup Quarto 步骤失败（exit code 8）：多半是工作流里写了 version: latest。latest 不是 quarto-dev/quarto-actions/setup 的合法值，action 会去下载 vlatest 的安装包导致 404。把它改成 version: release，重新提交推送。\nActions 页面找不到工作流：.github/workflows/publish.yml 没有提交，或提交后没推送到 main 分支。检查文件位置是否正确，再 git push 一次。\n构建失败（红叉）：点进失败的 job 查看日志。常见原因是下载 Quarto 超时，在 Actions 页面点击 Re-run all jobs 重跑即可。\ngh-pages 分支没生成：说明工作流失败，发布步骤不会执行。先修好失败步骤，再推送一次；工作流成功（绿勾）后分支才会出现。\n页面打不开 404：多数是 Settings → Pages 的 Source 没选 gh-pages 分支，或还没点 Save。按上文重新设置。\nSSH 认证失败（Permission denied）：密钥没添加到 GitHub 或代理没启动。回到 环境配置 用 ssh -T git@github.com 重新验证。\n仓库名正好是 &lt;用户名&gt;.github.io：这种仓库比较特殊，GitHub Pages 会直接部署到根域名 https://&lt;用户名&gt;.github.io/，访问地址里没有仓库名。一个账号只能有一个这样的仓库。",
-    "crumbs": [
-      "Quarto 发布与部署",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
-    ]
-  },
-  {
-    "objectID": "chapters/quarto-publish/github-pages.html#小结",
-    "href": "chapters/quarto-publish/github-pages.html#小结",
-    "title": "9  Quarto 发布到 GitHub Pages",
-    "section": "9.11 小结",
-    "text": "9.11 小结\n\n\n\n步骤\n操作\n\n\n\n\n建仓库\nGitHub → New repository（选 Public）\n\n\n本地构建\nquarto render 确认无报错\n\n\n推送源码\ngit init + add + commit + push\n\n\n自动构建\n.github/workflows/publish.yml\n\n\n开启页面\nSettings → Pages → 选择 gh-pages 分支\n\n\n\n至此，你的 Git 笔记已经可以在线访问了。",
+    "section": "9.7 总结",
+    "text": "9.7 总结\n\n\n\n步骤\n操作\n\n\n\n\n建仓库\nGitHub → New repository（选 Public）\n\n\n本地构建\nquarto render 确认无报错\n\n\n推送源码\ngit init + add + commit + push\n\n\n自动构建\n.github/workflows/publish.yml\n\n\n开启页面\nSettings → Pages → 选择 gh-pages 分支\n\n\n\n至此，您的 Git 笔记已经可以在线访问了。",
     "crumbs": [
       "Quarto 发布与部署",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Quarto 发布到 GitHub Pages</span>"
